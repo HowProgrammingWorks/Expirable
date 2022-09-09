@@ -7,7 +7,7 @@ class Expirable {
     this.expired = false;
     this.timer = null;
     this.promise = new Promise((resolve, reject) => {
-      const exit = fn => val => {
+      const exit = (fn) => (val) => {
         if (this.expired) return;
         clearTimeout(this.timer);
         fn(val);
@@ -24,13 +24,13 @@ class Expirable {
 
 // Usage
 
-new Expirable(resolve => {
+new Expirable((resolve) => {
   setTimeout(() => {
     resolve('Resolved before timeout');
   }, 100);
-}).then(data => {
+}).then((data) => {
   console.dir({ data });
-}).catch(error => {
+}).catch((error) => {
   console.dir({ error: error.message });
 });
 
@@ -38,19 +38,19 @@ new Expirable((resolve, reject) => {
   setTimeout(() => {
     reject(new Error('Something went wrong'));
   }, 100);
-}).then(data => {
+}).then((data) => {
   console.dir({ data });
-}).catch(error => {
+}).catch((error) => {
   console.dir({ error: error.message });
 });
 
-new Expirable(resolve => {
+new Expirable((resolve) => {
   setTimeout(() => {
     resolve('Never resolved before timeout');
   }, 2000);
-}).then(data => {
+}).then((data) => {
   console.dir({ data });
-}).catch(error => {
+}).catch((error) => {
   console.dir({ error: error.message });
 });
 
@@ -58,8 +58,8 @@ new Expirable((resolve, reject) => {
   setTimeout(() => {
     reject(new Error('Never rejected before timeout'));
   }, 2000);
-}).then(data => {
+}).then((data) => {
   console.dir({ data });
-}).catch(error => {
+}).catch((error) => {
   console.dir({ error: error.message });
 });

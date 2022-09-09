@@ -6,30 +6,30 @@ const expirable = (executor, timeout = PROMISE_TIMEOUT) =>
   new Promise((resolve, reject) => {
     let expired = false;
     let timer = null;
-    executor(val => {
+    executor((val) => {
       if (expired) return;
       clearTimeout(timer);
       resolve(val);
-    }, err => {
+    }, (err) => {
       if (expired) return;
       clearTimeout(timer);
       reject(err);
     });
     timer = setTimeout(() => {
       expired = true;
-      reject(new Error("Expired"));
+      reject(new Error('Expired'));
     }, timeout);
   });
 
 // Usage
 
-expirable(resolve => {
+expirable((resolve) => {
   setTimeout(() => {
     resolve('Resolved before timeout');
   }, 100);
-}).then(data => {
+}).then((data) => {
   console.dir({ data });
-}).catch(error => {
+}).catch((error) => {
   console.dir({ error: error.message });
 });
 
@@ -37,19 +37,19 @@ expirable((resolve, reject) => {
   setTimeout(() => {
     reject(new Error('Something went wrong'));
   }, 100);
-}).then(data => {
+}).then((data) => {
   console.dir({ data });
-}).catch(error => {
+}).catch((error) => {
   console.dir({ error: error.message });
 });
 
-expirable(resolve => {
+expirable((resolve) => {
   setTimeout(() => {
     resolve('Never resolved before timeout');
   }, 2000);
-}).then(data => {
+}).then((data) => {
   console.dir({ data });
-}).catch(error => {
+}).catch((error) => {
   console.dir({ error: error.message });
 });
 
@@ -57,8 +57,8 @@ expirable((resolve, reject) => {
   setTimeout(() => {
     reject(new Error('Never rejected before timeout'));
   }, 2000);
-}).then(data => {
+}).then((data) => {
   console.dir({ data });
-}).catch(error => {
+}).catch((error) => {
   console.dir({ error: error.message });
 });
